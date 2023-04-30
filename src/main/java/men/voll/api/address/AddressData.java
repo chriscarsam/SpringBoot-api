@@ -1,4 +1,4 @@
-package men.voll.api;
+package men.voll.api.address;
 
 public record AddressData(String street, String district, String city, int number, String complement) {
 }
