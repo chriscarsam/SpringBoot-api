@@ -1,4 +1,4 @@
-package men.voll.api.medico;
+package men.voll.api.doctor;
 
 import men.voll.api.address.AddressData;
 

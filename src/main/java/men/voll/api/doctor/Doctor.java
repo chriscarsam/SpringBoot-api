@@ -1,4 +1,4 @@
-package men.voll.api.medico;
+package men.voll.api.doctor;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,4 +25,12 @@ public class Doctor {
     private Specialty specialty;
     @Embedded
     private Address address;
+
+    public Doctor(MedicalRecordData medicalRecordData) {
+        this.name = medicalRecordData.name();
+        this.email = medicalRecordData.email();
+        this.document = medicalRecordData.document();
+        this.specialty = medicalRecordData.specialty();
+        this.address = new Address(medicalRecordData.address());
+    }
 }

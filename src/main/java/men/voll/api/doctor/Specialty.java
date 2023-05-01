@@ -1,4 +1,4 @@
-package men.voll.api.medico;
+package men.voll.api.doctor;
 
 public enum Specialty {
     ORTHOPEDICS, CARDIOLOGY, GYNECOLOGY, PEDIATRICS
