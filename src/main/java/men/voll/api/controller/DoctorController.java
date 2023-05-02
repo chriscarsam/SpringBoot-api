@@ -2,6 +2,7 @@ package men.voll.api.controller;
 
 import jakarta.validation.Valid;
 import men.voll.api.doctor.Doctor;
+import men.voll.api.doctor.MedicalListData;
 import men.voll.api.doctor.MedicalRecordData;
 import men.voll.api.doctor.MedicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class DoctorController {
         medicalRepository.save(new Doctor(medicalRecordData));
     }
     @GetMapping
-    public List<Doctor> medicalList(){
-        return medicalRepository.findAll();
+    public List<MedicalListData> medicalList(){
+        return medicalRepository.findAll().stream().map(MedicalListData::new).toList();
     }
 
 }
