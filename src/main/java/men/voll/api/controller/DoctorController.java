@@ -33,11 +33,17 @@ public class DoctorController {
         Doctor doctor = medicalRepository.getReferenceById(dataUpdateDoctor.id());
         doctor.updateData(dataUpdateDoctor);
     }
-
+    // DELETE LOGICO
     @DeleteMapping("/{id}")
     @Transactional
     public void deleteDoctor(@PathVariable Long id){
         Doctor doctor = medicalRepository.getReferenceById(id);
-        medicalRepository.delete(doctor);
+        doctor.deactivateDoctor(doctor);
     }
+
+    // DELETE EN BASE DE DATOS
+  // public void deleteDoctor(@PathVariable Long id){
+   //     Doctor doctor = medicalRepository.getReferenceById(id);
+    //    medicalRepository.delete(doctor);
+  //  }
 }

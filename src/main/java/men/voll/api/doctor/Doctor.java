@@ -22,6 +22,7 @@ public class Doctor {
     private String email;
     private String phone;
     private String document;
+    private Boolean active;
     @Enumerated(EnumType.STRING)
     private Specialty specialty;
     @Embedded
@@ -32,6 +33,7 @@ public class Doctor {
         this.email = medicalRecordData.email();
         this.phone = medicalRecordData.phone();
         this.document = medicalRecordData.document();
+        this.active = true;
         this.specialty = medicalRecordData.specialty();
         this.address = new Address(medicalRecordData.address());
     }
@@ -48,4 +50,7 @@ public class Doctor {
         }
     }
 
+    public void deactivateDoctor(Doctor doctor) {
+        doctor.active = false;
+    }
 }
