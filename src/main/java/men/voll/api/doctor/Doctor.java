@@ -35,4 +35,17 @@ public class Doctor {
         this.specialty = medicalRecordData.specialty();
         this.address = new Address(medicalRecordData.address());
     }
+
+    public void updateData(DataUpdateDoctor dataUpdateDoctor) {
+        if (dataUpdateDoctor.name() != null){
+            this.name = dataUpdateDoctor.name();
+        }
+        if (dataUpdateDoctor.document() != null){
+            this.document = dataUpdateDoctor.document();
+        }
+        if (dataUpdateDoctor.address() != null){
+            this.address = address.updateData(dataUpdateDoctor.address());
+        }
+    }
+
 }

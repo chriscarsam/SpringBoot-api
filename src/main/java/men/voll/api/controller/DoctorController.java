@@ -1,10 +1,7 @@
 package men.voll.api.controller;
 
 import jakarta.validation.Valid;
-import men.voll.api.doctor.Doctor;
-import men.voll.api.doctor.MedicalListData;
-import men.voll.api.doctor.MedicalRecordData;
-import men.voll.api.doctor.MedicalRepository;
+import men.voll.api.doctor.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +25,8 @@ public class DoctorController {
     }
 
     @PutMapping
-    public void updateDoctor(){
-
+    public void updateDoctor(DataUpdateDoctor dataUpdateDoctor){
+        Doctor doctor = medicalRepository.getReferenceById(dataUpdateDoctor.id());
+        doctor.updateData(dataUpdateDoctor);
     }
 }
