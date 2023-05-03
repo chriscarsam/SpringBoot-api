@@ -24,7 +24,8 @@ public class DoctorController {
     }
     @GetMapping
     public Page<MedicalListData> medicalList(@PageableDefault(size = 2) Pageable pageable){
-        return medicalRepository.findAll(pageable).map(MedicalListData::new);
+        //return medicalRepository.findAll(pageable).map(MedicalListData::new);
+        return medicalRepository.findByActiveTrue(pageable).map(MedicalListData::new);
     }
 
     @PutMapping
@@ -38,7 +39,7 @@ public class DoctorController {
     @Transactional
     public void deleteDoctor(@PathVariable Long id){
         Doctor doctor = medicalRepository.getReferenceById(id);
-        doctor.deactivateDoctor(doctor);
+        doctor.deactivateDoctor();
     }
 
     // DELETE EN BASE DE DATOS

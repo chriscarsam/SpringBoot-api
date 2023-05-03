@@ -50,7 +50,7 @@ public class Doctor {
         }
     }
 
-    public void deactivateDoctor(Doctor doctor) {
-        doctor.active = false;
+    public void deactivateDoctor() {
+        this.active = false;
     }
 }
