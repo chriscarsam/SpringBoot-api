@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
+
 @RestController
 @RequestMapping("/doctors")
 public class DoctorController {
@@ -30,5 +32,12 @@ public class DoctorController {
     public void updateDoctor(@RequestBody @Valid DataUpdateDoctor dataUpdateDoctor){
         Doctor doctor = medicalRepository.getReferenceById(dataUpdateDoctor.id());
         doctor.updateData(dataUpdateDoctor);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deleteDoctor(@PathVariable Long id){
+        Doctor doctor = medicalRepository.getReferenceById(id);
+        medicalRepository.delete(doctor);
     }
 }
