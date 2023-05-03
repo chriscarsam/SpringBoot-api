@@ -1,5 +1,6 @@
 package men.voll.api.controller;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import men.voll.api.doctor.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class DoctorController {
     }
 
     @PutMapping
-    public void updateDoctor(DataUpdateDoctor dataUpdateDoctor){
+    @Transactional
+    public void updateDoctor(@RequestBody @Valid DataUpdateDoctor dataUpdateDoctor){
         Doctor doctor = medicalRepository.getReferenceById(dataUpdateDoctor.id());
         doctor.updateData(dataUpdateDoctor);
     }
