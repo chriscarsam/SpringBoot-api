@@ -27,4 +27,8 @@ public class DoctorController {
         return medicalRepository.findAll(pageable).map(MedicalListData::new);
     }
 
+    @PutMapping
+    public void updateDoctor(){
+
+    }
 }
