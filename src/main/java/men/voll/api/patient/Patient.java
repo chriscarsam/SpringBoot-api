@@ -22,6 +22,7 @@ public class Patient {
     private String email;
     private String identityCard;
     private String phone;
+    private Boolean active;
 
     @Embedded
     private Address address;
@@ -30,8 +31,24 @@ public class Patient {
         this.name = patientRegistrationData.name();
         this.email = patientRegistrationData.email();
         this.phone = patientRegistrationData.phone();
+        this.active = true;
         this.identityCard = patientRegistrationData.identityCard();
         this.address = new Address(patientRegistrationData.address());
     }
 
+    public void updatePatient(DataUpdatePatient dataUpdatePatient) {
+        if (dataUpdatePatient.name() != null){
+            this.name = dataUpdatePatient.name();
+        }
+        if (dataUpdatePatient.phone() != null){
+            this.phone = dataUpdatePatient.phone();
+        }
+        if (dataUpdatePatient.address() != null){
+            address.updateData(dataUpdatePatient.address());
+        }
+    }
+
+    public void deactivatePatient() {
+        this.active = false;
+    }
 }
