@@ -36,9 +36,9 @@ public class DoctorController {
         return ResponseEntity.created(uri).body(medicalResponseData);
     }
     @GetMapping
-    public Page<MedicalListData> medicalList(@PageableDefault(size = 2) Pageable pageable){
+    public ResponseEntity<Page<MedicalListData>> medicalList(@PageableDefault(size = 2) Pageable pageable){
         //return medicalRepository.findAll(pageable).map(MedicalListData::new);
-        return medicalRepository.findByActiveTrue(pageable).map(MedicalListData::new);
+        return ResponseEntity.ok(medicalRepository.findByActiveTrue(pageable).map(MedicalListData::new));
     }
 
     @PutMapping
@@ -63,9 +63,17 @@ public class DoctorController {
         return ResponseEntity.noContent().build();
     }
 
-    // DELETE EN BASE DE DATOS
-  // public void deleteDoctor(@PathVariable Long id){
-   //     Doctor doctor = medicalRepository.getReferenceById(id);
-    //    medicalRepository.delete(doctor);
-  //  }
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicalResponseData> returnMedicalData(@PathVariable Long id){
+        Doctor doctor = medicalRepository.getReferenceById(id);
+        doctor.deactivateDoctor();
+        var medicalData =  new MedicalResponseData(
+                doctor.getId(), doctor.getName(), doctor.getEmail(),
+                doctor.getPhone(), doctor.getSpecialty().toString(),
+                new AddressData(doctor.getAddress().getStreet(), doctor.getAddress().getDistrict(),
+                        doctor.getAddress().getCity(), doctor.getAddress().getNumber(),
+                        doctor.getAddress().getComplement()));
+        return ResponseEntity.ok(medicalData);
+    }
+
 }
