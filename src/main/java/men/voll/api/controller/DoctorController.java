@@ -10,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.print.Doc;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/doctors")
@@ -21,8 +23,17 @@ public class DoctorController {
     private MedicalRepository medicalRepository;
 
     @PostMapping
-    public void registerDoctor(@RequestBody @Valid MedicalRecordData medicalRecordData){
-        medicalRepository.save(new Doctor(medicalRecordData));
+    public ResponseEntity<MedicalResponseData> registerDoctor(@RequestBody @Valid MedicalRecordData medicalRecordData, UriComponentsBuilder uriComponentsBuilder){
+        Doctor doctor = medicalRepository.save(new Doctor(medicalRecordData));
+        MedicalResponseData medicalResponseData =  new MedicalResponseData(
+                doctor.getId(), doctor.getName(), doctor.getEmail(),
+                doctor.getPhone(), doctor.getSpecialty().toString(),
+                new AddressData(doctor.getAddress().getStreet(), doctor.getAddress().getDistrict(),
+                        doctor.getAddress().getCity(), doctor.getAddress().getNumber(),
+                        doctor.getAddress().getComplement()));
+
+        URI uri = uriComponentsBuilder.path("/doctors/{id}").buildAndExpand(doctor.getId()).toUri();
+        return ResponseEntity.created(uri).body(medicalResponseData);
     }
     @GetMapping
     public Page<MedicalListData> medicalList(@PageableDefault(size = 2) Pageable pageable){
