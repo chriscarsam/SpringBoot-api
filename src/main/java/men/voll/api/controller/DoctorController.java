@@ -2,8 +2,9 @@ package men.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import men.voll.api.address.AddressData;
-import men.voll.api.doctor.*;
+import men.voll.api.domain.address.AddressData;
+
+import men.voll.api.domain.doctor.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.print.Doc;
 import java.net.URI;
 
 @RestController

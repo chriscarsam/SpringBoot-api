@@ -1,10 +1,8 @@
-package men.voll.api.doctor;
+package men.voll.api.domain.doctor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 public interface MedicalRepository extends JpaRepository<Doctor, Long> {
     Page<Doctor> findByActiveTrue(Pageable pageable);

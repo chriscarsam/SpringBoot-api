@@ -1,4 +1,4 @@
-package men.voll.api.doctor;
+package men.voll.api.domain.doctor;
 
 public enum Specialty {
     ORTHOPEDICS, CARDIOLOGY, GYNECOLOGY, PEDIATRICS

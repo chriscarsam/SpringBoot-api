@@ -1,6 +1,4 @@
-package men.voll.api.doctor;
-
-import men.voll.api.patient.Patient;
+package men.voll.api.domain.doctor;
 
 public record MedicalListData(Long id, String name, String speciality, String document, String email) {
 

@@ -1,4 +1,4 @@
-package men.voll.api.address;
+package men.voll.api.domain.address;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
