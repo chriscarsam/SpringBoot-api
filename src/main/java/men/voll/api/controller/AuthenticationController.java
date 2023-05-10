@@ -1,7 +1,9 @@
 package men.voll.api.controller;
 
 import jakarta.validation.Valid;
+import men.voll.api.domain.user.User;
 import men.voll.api.domain.user.UserAuthenticationData;
+import men.voll.api.infra.security.DataJWTtoken;
 import men.voll.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,8 @@ public class AuthenticationController {
     @PostMapping
     public ResponseEntity authenticationUser(@RequestBody @Valid UserAuthenticationData userAuthenticationData){
         Authentication authToken = new UsernamePasswordAuthenticationToken(userAuthenticationData.login(), userAuthenticationData.password());
-        authenticationManager.authenticate(authToken);
-        String JWTtoken = tokenService.generateToken();
-        return ResponseEntity.ok(JWTtoken);
+        var authenticatedUser = authenticationManager.authenticate(authToken);
+        String JWTtoken = tokenService.generateToken((User) authenticatedUser.getPrincipal());
+        return ResponseEntity.ok(new DataJWTtoken(JWTtoken));
     }
 }
