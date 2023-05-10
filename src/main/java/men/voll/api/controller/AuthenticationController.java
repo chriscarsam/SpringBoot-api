@@ -2,6 +2,7 @@ package men.voll.api.controller;
 
 import jakarta.validation.Valid;
 import men.voll.api.domain.user.UserAuthenticationData;
+import men.voll.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity authenticationUser(@RequestBody @Valid UserAuthenticationData userAuthenticationData){
-        Authentication token = new UsernamePasswordAuthenticationToken(userAuthenticationData.login(), userAuthenticationData.password());
-        authenticationManager.authenticate(token);
-        return ResponseEntity.ok().build();
+        Authentication authToken = new UsernamePasswordAuthenticationToken(userAuthenticationData.login(), userAuthenticationData.password());
+        authenticationManager.authenticate(authToken);
+        String JWTtoken = tokenService.generateToken();
+        return ResponseEntity.ok(JWTtoken);
     }
 }
