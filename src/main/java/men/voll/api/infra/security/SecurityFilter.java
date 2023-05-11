@@ -4,7 +4,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import men.voll.api.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,17 +18,22 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Obtener el token del header
-        System.out.println("Este es el inicio del filter");
-        var token = request.getHeader("Authorization");
-        System.out.println("token = " + token);
-        if (token != null){
-            System.out.println("Validamos que token no es null");
-            token = token.replace("Bearer ","");
-            System.out.println(token);
-            System.out.println(tokenService.getSubject(token)); // Este usuario tiene sesion
+        var authHeader = request.getHeader("Authorization");
+        if (authHeader != null){
+            var token = authHeader.replace("Bearer ","");
+            var nameUser = tokenService.getSubject(token);
+            if (nameUser != null){
+                // Token valido
+                var user = userRepository.findByLogin(nameUser);
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities()); // forsamos un inicio de sesion
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         filterChain.doFilter(request, response);
     }
