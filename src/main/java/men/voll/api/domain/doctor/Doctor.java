@@ -39,10 +39,10 @@ public class Doctor {
     }
 
     public void updateData(DataUpdateDoctor dataUpdateDoctor) {
-        if (dataUpdateDoctor.name() != null){
+        if (!dataUpdateDoctor.name().isBlank()){
             this.name = dataUpdateDoctor.name();
         }
-        if (dataUpdateDoctor.document() != null){
+        if (!dataUpdateDoctor.document().isBlank()){
             this.document = dataUpdateDoctor.document();
         }
         if (dataUpdateDoctor.address() != null){
